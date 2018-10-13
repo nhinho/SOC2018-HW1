@@ -1,0 +1,111 @@
+<!doctype html>
+<html>
+  <head>
+    <title>Study_DASH_Streaming</title>
+    <link href="css/bootstrap.css" rel="stylesheet"/>
+    <link href="css/bootstrap-theme.css" rel="stylesheet"/>
+    <link rel="icon" href="favicon/favicon.ico">
+    <link href="css/theme.css" rel="stylesheet"/>
+    <script src="lib/angular.js"></script>
+    <script src="lib/jquery_v2_1_3.js"></script>
+    <script src="lib/bootstrap.js"></script>
+    <script src="lib/shaka-player.compiled.js"></script>
+    <script type="text/javascript" src="http://jsgetip.appspot.com"></script>
+  </head>
+  <body role="document" ng-app="myApp">
+    <nav class="navbar navbar-inverse navbar-fixed-top" ng-controller="NavbarController">
+      <div class="container">
+        <div class="navbar-header">
+          <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar" aria-expanded="false" aria-controls="navbar">
+            <span class="sr-only">Toggle navigation</span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+          </button>
+          <a class="navbar-brand" href="#">{{title}}</a>
+        </div>
+        
+        <div id="navbar" class="navbar-collapse collapse">
+          <ul class="nav navbar-nav">
+            <li ng-repeat="item in menuitems" menuitem info="item"></li>
+          </ul>
+        </div><!--/.nav-collapse -->
+      </div>
+    </nav>
+
+    <div class="container theme-showcase" role="main">
+      <div class="page-header">
+        <h1>Dash Streaming Player</h1>
+      </div>
+
+      <div class="row" ng-controller="PlayerController">
+        <div class="col-sm-7">
+          <div class="panel panel-default">
+            <div class="panel-heading">
+              <h3 class="panel-title">Shaka Player</h3>
+            </div>
+            <div class="panel-body">
+              <div class="row">
+                <video id="video" width="100%" controls autoplay muted></video>
+              </div>
+            </div>
+          </div>
+        </div><!-- /.col-sm-7 -->
+
+        <div class="col-sm-5">
+          <div class="panel panel-info">
+            <div class="panel-heading">
+              <h3 class="panel-title">Info & Control</h3> 
+            </div>
+            <div class="panel-body">
+              <div class="col-sm-12">
+                <div class="form-group">
+                  <label>MPD Selects</label>
+                  <select class="form-control" id="mpdSelect" ng-change="onChangeMPD()" ng-model="manifestUrl">
+                      <option ng-repeat="option in availableMpds" value="{{option.id}}">{{option.name}}</option>
+                  </select>
+                </div>
+
+                <div>
+                  <button ng-click="DASH_encode()">DASH</button>
+                  <button ng-click="start_stream()"> STREAM</button>
+                </div>
+
+              </div>
+
+              <div class="col-sm-12">
+                <label>Video Info</label>
+                <dl class="dl-horizontal">
+                  <div ng-repeat="(key, value) in videoInfo" videoinfo key="key" val="value"></div>
+                </dl>
+              </div>
+
+              <div class="col-sm-12">
+                <label>Video Status</label>
+                <dl class="dl-horizontal">
+                  <div ng-repeat="(key, value) in videoStatus" videostatus key="key" val="value"></div>
+                </dl>
+              </div>
+              
+            </div>
+          </div>
+        </div><!-- /.col-sm-5 -->
+      </div>
+    </div> 
+
+
+  </body>
+
+  <script type="text/javascript">
+      $(document).ready(function() {
+      
+      });
+  </script>
+
+  <script src="js/index.js"></script>
+  <script src="js/controllers/controller_navbar.js"></script>
+  <script src="js/controllers/controller_player.js"></script>
+  <script src="js/directives/directives_videoinfo.js"></script>
+  <script src="js/directives/directives_videostatus.js"></script>
+  <script src="js/directives/directives_menuitem.js"></script>
+</html>
